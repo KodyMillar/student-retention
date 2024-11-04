@@ -1,0 +1,100 @@
+openapi: 3.0.0
+info:
+  title: Student Retention API
+  description: This API receives student admissions and dropouts from a university
+  contact:
+    email: kmillar10@my.bcit.ca
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: enrollment-request
+paths:
+  /university-student-retention/enroll:
+    post:
+      tags:
+      - enrollment-request
+      summary: admits a student into the school
+      description: Adds a new student to the school's admission list
+      operationId: app.enroll_student
+      requestBody:
+        description: Student to add to admission list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentEnrollment'
+      responses:
+        "201":
+          description: student has been enrolled
+        "400":
+          description: invalid student object
+        "403":
+          description: you do not have permission to admit a student
+  /university-student-retention/drop-out:
+    post:
+      tags:
+      - enrollment-request
+      summary: withdraw a student from the school
+      description: removes a student from the school's admission list
+      operationId: app.withdraw_student
+      requestBody:
+        description: Students to remove from school list
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StudentDropOut'
+      responses:
+        "201":
+          description: "object created, student has been withdrawn"
+        "400":
+          description: invalid student object
+        "403":
+          description: you do not have permission to withdraw a student
+components:
+  schemas:
+    StudentEnrollment:
+      required:
+      - student_id
+      - program
+      - highschool_gpa
+      - student_acceptance_date
+      - program_starting_date
+      type: object
+      properties:
+        student_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        program:
+          type: string
+          example: Computer Science
+        highschool_gpa:
+          type: number
+          example: 3.2
+        student_acceptance_date:
+          type: string
+          example: "October 12th, 2024"
+        program_starting_date:
+          type: string
+          example: "January 4th, 2025"
+    StudentDropOut:
+      required:
+      - student_id
+      - program
+      - program_gpa
+      - student_dropout_date
+      type: object
+      properties:
+        student_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        program:
+          type: string
+          example: Computer Science
+        program_gpa:
+          type: number
+          example: 3.2
+        student_dropout_date:
+          type: string
+          example: "March 25th, 2025"

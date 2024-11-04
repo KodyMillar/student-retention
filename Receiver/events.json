@@ -1,0 +1,48 @@
+{
+    "num_enrolled_students": 48,
+    "recent_enrolled_students": [
+        {
+            "msg_data": "Student 83f58b09-348d-44df-80a9-07a946f03fbc has been enrolled in the Computer Science program on 12-06-2024 with a highschool gpa of 3.5",
+            "received_timestamp": "2024-09-17 12:23:31.551195"
+        },
+        {
+            "msg_data": "Student 812256cb-a8da-4af4-a790-349783cb3d16 has been enrolled in the Engineering program on 11-01-2024 with a highschool gpa of 3.7",
+            "received_timestamp": "2024-09-17 12:23:31.456632"
+        },
+        {
+            "msg_data": "Student 6d0230ca-eb14-48db-a9c5-a8c492aa03a4 has been enrolled in the Engineering program on 11-18-2024 with a highschool gpa of 3.7",
+            "received_timestamp": "2024-09-17 12:23:31.402631"
+        },
+        {
+            "msg_data": "Student d6221626-037d-4774-838b-d3a5700b3d8b has been enrolled in the Engineering program on 04-02-2025 with a highschool gpa of 3.4",
+            "received_timestamp": "2024-09-17 12:23:31.346630"
+        },
+        {
+            "msg_data": "Student ddf62321-6680-4ec1-b146-3eba85928a08 has been enrolled in the Engineering program on 09-24-2024 with a highschool gpa of 3.9",
+            "received_timestamp": "2024-09-17 12:23:31.291222"
+        }
+    ],
+    "num_withdrawn_students": 49,
+    "recent_withdrawn_students": [
+        {
+            "msg_data": "Student 3725bacd-83c6-43c6-b042-0a905e89b021 has been withdrawn from the Medicine program while holding a gpa of 1.1 on 10-29-2024",
+            "received_timestamp": "2024-09-17 12:23:31.494634"
+        },
+        {
+            "msg_data": "Student 9e257dec-cb25-4bbb-ae62-9f2d4d855fda has been withdrawn from the Medicine program while holding a gpa of 0.2 on 09-14-2024",
+            "received_timestamp": "2024-09-17 12:23:31.429630"
+        },
+        {
+            "msg_data": "Student e4e76672-a2ec-444f-8d57-6113c60eccb1 has been withdrawn from the Engineering program while holding a gpa of 1.9 on 02-03-2025",
+            "received_timestamp": "2024-09-17 12:23:31.372642"
+        },
+        {
+            "msg_data": "Student 7c3b03da-a96e-4604-aec9-23b28cd8e4d9 has been withdrawn from the Engineering program while holding a gpa of 2.5 on 03-26-2025",
+            "received_timestamp": "2024-09-17 12:23:31.318230"
+        },
+        {
+            "msg_data": "Student beafd880-d3d7-42db-97a4-5854974b17cf has been withdrawn from the Medicine program while holding a gpa of 0.5 on 01-02-2025",
+            "received_timestamp": "2024-09-17 12:23:31.266229"
+        }
+    ]
+}

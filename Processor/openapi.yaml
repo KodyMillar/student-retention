@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Student Retention API
+  description: This API receives student admissions and dropouts from a university
+  contact:
+    email: kmillar10@my.bcit.ca
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: enrollment-request
+paths:
+  /stats:
+    get:
+      summary: Gets the event status
+      operationId: app.get_stats
+      description: Retrieves enrolled and drop out students statistics
+      responses:
+        '200':
+          description: Successfully returned list of enrolled student events
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/StudentEnrollmentStats'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  
+components:
+  schemas:
+    StudentEnrollmentStats:
+      required:
+      - num_enrolled_students
+      - min_enrolled_student_gpa
+      - avg_enrolled_student_gpa
+      - num_drop_out_students
+      - max_drop_out_student_gpa
+      - avg_drop_out_student_gpa
+      - last_updated
+      type: object
+      properties:
+        num_enrolled_students:
+          type: integer
+          example: 1700
+        min_enrolled_student_gpa:
+          type: number
+          example: 3.3
+        avg_enrolled_student_gpa:
+          type: number
+          example: 3.5
+        num_drop_out_students:
+          type: integer
+          example: 500
+        max_drop_out_student_gpa:
+          type: number
+          example: 2.5
+        avg_drop_out_student_gpa:
+          type: number
+          example: 1.6
+        last_updated:
+          type: string
+          format: date-time
+          example: "2021-02-05T12:39:16"
+      

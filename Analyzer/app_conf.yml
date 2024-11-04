@@ -1,0 +1,9 @@
+version: 2
+enroll:
+  url: http://localhost:8090/university-student-retention/enroll
+drop-out:
+  url: http://localhost:8090/university-student-retention/drop-out
+events:
+  hostname: ec2-3-89-250-78.compute-1.amazonaws.com
+  port: 9092
+  topic: events

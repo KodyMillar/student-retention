@@ -1,0 +1,9 @@
+{
+    "num_enrolled_students": 2100,
+    "min_enrolled_student_gpa": 0.0,
+    "avg_enrolled_student_gpa": 0.0,
+    "num_drop_out_students": 2000,
+    "max_drop_out_student_gpa": 9.9,
+    "avg_drop_out_student_gpa": 9.9,
+    "last_updated": "2024-10-15T:10:51:53"
+}

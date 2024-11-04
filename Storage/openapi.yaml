@@ -1,0 +1,145 @@
+openapi: 3.0.0
+info:
+  title: Student Retention API
+  description: This API receives student admissions and dropouts from a university
+  contact:
+    email: kmillar10@my.bcit.ca
+  version: 1.0.0
+servers:
+- url: /
+tags:
+- name: enrollment-request
+paths:
+  /university-student-retention/enroll:
+    get:
+      description: Retrieves processed data for enroll requests
+      operationId: app.get_enroll_student
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: Limits the number of readings returned by time range
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33.012486Z
+        - name: end_timestamp
+          in: query
+          description: Limits the number of readings returned by time range
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33.012486Z
+      responses:
+        '200':
+          description: Successfully returned list of enrolled students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentEnrollment'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /university-student-retention/drop-out:
+    get:
+      description: Retrieves processed data for enroll requests
+      operationId: app.get_drop_out_student
+      parameters:
+        - name: start_timestamp
+          in: query
+          description: Limits the number of readings returned by time range
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33.001Z
+        - name: end_timestamp
+          in: query
+          description: Limits the number of readings returned by time range
+          schema:
+            type: string
+            format: date-time
+            example: 2016-08-29T09:12:33.001Z
+      responses:
+        '200':
+          description: Successfully returned list of enrolled students
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StudentDropOut'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    StudentEnrollment:
+      required:
+      - student_id
+      - program
+      - highschool_gpa
+      - student_acceptance_date
+      - program_starting_date
+      - trace_id
+      type: object
+      properties:
+        student_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        program:
+          type: string
+          example: Computer Science
+        highschool_gpa:
+          type: number
+          example: 3.2
+        student_acceptance_date:
+          type: string
+          example: "October 12th, 2024"
+        program_starting_date:
+          type: string
+          example: "January 4th, 2025"
+        trace_id:
+          type: string
+          format: uuid
+          example: '8ce371ef-3b9c-4f8f-83e3-62e79354cc51'
+    StudentDropOut:
+      required:
+      - student_id
+      - program
+      - program_gpa
+      - student_dropout_date
+      - trace_id
+      type: object
+      properties:
+        student_id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+        program:
+          type: string
+          example: Computer Science
+        program_gpa:
+          type: number
+          example: 3.2
+        student_dropout_date:
+          type: string
+          example: "March 25th, 2025"
+        trace_id:
+          type: string
+          format: uuid
+          example: '8ce371ef-3b9c-4f8f-83e3-62e79354cc51'
