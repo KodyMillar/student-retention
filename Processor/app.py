@@ -46,43 +46,49 @@ def populate_stats():
 
 	start_timestamp = json_data['last_updated']
 	current_date = datetime.strftime(datetime.now(), '%Y-%m-%dT:%H:%M:%S')
+	logger.debug("\n DATE\n")
+	logger.debug(current_date)
 
 	header = {"Content-Type": "application/json"}
 	params = {"start_timestamp": start_timestamp, "end_timestamp": current_date}
+	enroll_response = ""
+	drop_out_response = {}
 	try:
 		enroll_response = requests.get(f"{app_config['eventstore']['url']}/enroll", params=params, headers=header)
 		drop_out_response = requests.get(f"{app_config['eventstore']['url']}/drop-out", params=params, headers=header)
+		logger.debug("ENROLL RESPONSE")
+		logger.debug(enroll_response)
+		logger.info(f"Received {len(enroll_response.json())} enroll events")
+		logger.info(f"Received {len(drop_out_response.json())} drop-out events")
+
+		if enroll_response.status_code != 200:
+			logger.error("Did not receive a 200 response code from enroll endpoint")
+			return
+		if drop_out_response.status_code != 200:
+			logger.error("Did not receive a 200 response code from drop-out endpoint")
+			return
+		
+		enroll_gpa = [event["highschool_gpa"] for event in enroll_response.json()]
+		drop_out_gpa = [event["program_gpa"] for event in drop_out_response.json()]
+
+		enroll_gpa += [json_data["min_enrolled_student_gpa"]]
+		drop_out_gpa += [json_data["max_drop_out_student_gpa"]]
+		
+		json_data["num_enrolled_students"] += len(enroll_response.json())
+		json_data["min_enrolled_student_gpa"] = min(enroll_gpa)
+		json_data["avg_enrolled_student_gpa"] = mean(enroll_gpa)
+		json_data["num_drop_out_students"] += len(drop_out_response.json())
+		json_data["max_drop_out_student_gpa"] = max(drop_out_gpa)
+		json_data["avg_drop_out_student_gpa"] = mean(drop_out_gpa)
+		json_data["last_updated"] = current_date
+
+		logger.debug(json_data)
+
+		with open(app_config['datastore']['filename'], 'w') as f:
+			json.dump(json_data, f, indent=4)
 	except Exception as e:
 		logger.exception(e)
-
-	logger.info(f"Received {len(enroll_response.json())} enroll events")
-	logger.info(f"Received {len(drop_out_response.json())} drop-out events")
 	
-	if enroll_response.status_code != 200:
-		logger.error("Did not receive a 200 response code from enroll endpoint")
-		return
-	if drop_out_response.status_code != 200:
-		logger.error("Did not receive a 200 response code from drop-out endpoint")
-		return
-	
-	enroll_gpa = [event["highschool_gpa"] for event in enroll_response.json()]
-	drop_out_gpa = [event["program_gpa"] for event in drop_out_response.json()]
-
-	enroll_gpa += [json_data["min_enrolled_student_gpa"]]
-	drop_out_gpa += [json_data["max_drop_out_student_gpa"]]
-	
-	json_data["num_enrolled_students"] += len(enroll_response.json())
-	json_data["min_enrolled_student_gpa"] = min(enroll_gpa)
-	json_data["avg_enrolled_student_gpa"] = mean(enroll_gpa)
-	json_data["num_drop_out_students"] += len(drop_out_response.json())
-	json_data["max_drop_out_student_gpa"] = max(drop_out_gpa)
-	json_data["avg_drop_out_student_gpa"] = mean(drop_out_gpa)
-	json_data["last_updated"] = current_date
-
-	logger.debug(json_data)
-
-	with open(app_config['datastore']['filename'], 'w') as f:
-		json.dump(json_data, f, indent=4)
 
 
 def get_stats():

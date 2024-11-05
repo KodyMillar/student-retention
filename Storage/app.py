@@ -122,6 +122,9 @@ def get_enroll_student(start_timestamp, end_timestamp):
 def get_drop_out_student(start_timestamp, end_timestamp):
 	session = DB_SESSION()
 
+	logger.debug("START TIMESTAMP")
+	logger.debug(start_timestamp)
+
 	start_timestamp_datetime = datetime.strptime(start_timestamp, "%Y-%m-%dT:%H:%M:%S")
 	end_timestamp_datetime = datetime.strptime(end_timestamp, "%Y-%m-%dT:%H:%M:%S")
 
