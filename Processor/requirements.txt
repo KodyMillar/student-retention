@@ -1,3 +1,4 @@
 connexion[flask]==3.1.0
 swagger-ui-bundle==1.1.0
+uvicorn==0.32.0
 APScheduler==3.10.4
