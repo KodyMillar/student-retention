@@ -6,7 +6,7 @@ import logging.config
 from apscheduler.schedulers.background import BackgroundScheduler
 import os
 import json
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
 from statistics import mean
 from connexion import NoContent
 
@@ -65,8 +65,6 @@ def populate_stats():
 		logger.error("Did not receive a 200 response code from drop-out endpoint")
 		return
 	
-	# logger.debug(enroll_response.json())
-	
 	enroll_gpa = [event["highschool_gpa"] for event in enroll_response.json()]
 	drop_out_gpa = [event["program_gpa"] for event in drop_out_response.json()]
 
@@ -116,33 +114,6 @@ def init_scheduler():
 				  'interval',
 				  seconds=app_config['scheduler']['period_sec'])
 	sched.start()
-
-
-# def enroll_student(body):
-# 	body["trace_id"] = str(uuid.uuid4())
-
-# 	logger.info(f"Received event enroll request with a trace id of {body["trace_id"]}")
-
-# 	header = {"Content-Type": "application/json"}
-	
-# 	response = requests.post(app_config["enroll"]["url"], json=body, headers=header)
-	
-# 	logger.info(f"Returned event enroll response (id: {body["trace_id"]}) with status {response.status_code}")
-
-# 	return NoContent, response.status_code
-
-
-# def withdraw_student(body):
-# 	body["trace_id"] = str(uuid.uuid4())
-
-# 	logger.info(f"Received event drop-out request with a trace id of {body["trace_id"]}")
-	
-# 	header = {"Content-Type": "application/json"}
-# 	response = requests.post(app_config["drop-out"]["url"], json=body, headers=header)
-
-# 	logger.info(f"Returned event drop-out response (id: {body["trace_id"]}) with status {response.status_code}")
-	
-# 	return NoContent, response.status_code
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
