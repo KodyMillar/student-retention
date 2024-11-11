@@ -45,7 +45,12 @@ def populate_stats():
 	logger.debug(json_data)
 
 	start_timestamp = json_data['last_updated']
-	current_date = datetime.strftime(datetime.now(), '%Y-%m-%dT:%H:%M:%S')
+	if datetime.now() - datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') > timedelta(seconds=6):
+		start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+	current_date = datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') + timedelta(seconds=5)
+	current_date = datetime.strftime(current_date, '%Y-%m-%dT:%H:%M:%S')
+	#start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=10), '%Y-%m-%dT:%H:%M:%S')
+	#current_date = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
 	logger.debug("\n DATE\n")
 	logger.debug(current_date)
 
@@ -56,8 +61,8 @@ def populate_stats():
 	try:
 		enroll_response = requests.get(f"{app_config['eventstore']['url']}/enroll", params=params, headers=header)
 		drop_out_response = requests.get(f"{app_config['eventstore']['url']}/drop-out", params=params, headers=header)
-		logger.debug("ENROLL RESPONSE")
-		logger.debug(enroll_response)
+		logger.debug("ENROLL RESPONSE\n---------------\n")
+		logger.debug(enroll_response.json())
 		logger.info(f"Received {len(enroll_response.json())} enroll events")
 		logger.info(f"Received {len(drop_out_response.json())} drop-out events")
 
@@ -127,4 +132,4 @@ app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
 	init_scheduler()
-	app.run(port=8100, hosts="0.0.0.0")
+	app.run(port=8100, host="0.0.0.0")

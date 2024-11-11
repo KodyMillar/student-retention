@@ -4,6 +4,6 @@ enroll:
 drop-out:
   url: http://localhost:8090/university-student-retention/drop-out
 events:
-  hostname: ec2-54-196-104-117.compute-1.amazonaws.com
+  hostname: deployment-kafka-1
   port: 9092
   topic: events

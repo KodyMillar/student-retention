@@ -104,13 +104,14 @@ def get_enroll_student(start_timestamp, end_timestamp):
 				Enroll.date_created < end_timestamp_datetime))
 	except Exception as e:
 		logger.debug(e)
-
-	logger.debug(results)
 	
 	results_list = []
 
 	for reading in results:
 		results_list.append(reading.to_dict())
+
+	logger.debug("\nRESULTS RECEIVED")
+	logger.debug(results_list)
 	
 	session.close()
 
@@ -121,9 +122,6 @@ def get_enroll_student(start_timestamp, end_timestamp):
 
 def get_drop_out_student(start_timestamp, end_timestamp):
 	session = DB_SESSION()
-
-	logger.debug("START TIMESTAMP")
-	logger.debug(start_timestamp)
 
 	start_timestamp_datetime = datetime.strptime(start_timestamp, "%Y-%m-%dT:%H:%M:%S")
 	end_timestamp_datetime = datetime.strptime(end_timestamp, "%Y-%m-%dT:%H:%M:%S")
@@ -184,5 +182,5 @@ if __name__ == "__main__":
 	t1 = Thread(target=process_messages)
 	t1.setDaemon(True)
 	t1.start()
-	app.run(port=8090)
+	app.run(port=8090, host="0.0.0.0")
 	

@@ -2,10 +2,10 @@ version: 2
 datastore:
   user: kody
   password: "ROMRAMRemRam!"
-  hostname: ec2-54-196-104-117.compute-1.amazonaws.com
+  hostname: deployment-db-1
   port: 3306
   db: events
 events:
-  hostname: ec2-54-196-104-117.compute-1.amazonaws.com
+  hostname: deployment-kafka-1
   port: 9092
   topic: events

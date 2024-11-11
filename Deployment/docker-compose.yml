@@ -14,10 +14,10 @@ services:
     hostname: kafka
     environment:
       KAFKA_CREATE_TOPICS: "events:1:1" # topic:partition:replicas
-      KAFKA_ADVERTISED_HOST_NAME: ec2-54-196-104-117.compute-1.amazonaws.com # docker-machine ip
+      KAFKA_ADVERTISED_HOST_NAME: deployment-kafka-1 # docker-machine ip
       KAFKA_LISTENERS: INSIDE://:29092,OUTSIDE://:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://ec2-54-196-104-117.compute-1.amazonaws.com:9092
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:29092,OUTSIDE://deployment-kafka-1:9092
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
@@ -31,8 +31,8 @@ services:
     environment:
       MYSQL_DATABASE: 'events' # Database name
       MYSQL_USER: 'kody' # So you don't have to use root, but you can if you like
-      MYSQL_PASSWORD: '' # You can use whatever password you like
-      MYSQL_ROOT_PASSWORD: '' # Password for root access
+      MYSQL_PASSWORD: 'ROMRAMRemRam!' # You can use whatever password you like
+      MYSQL_ROOT_PASSWORD: 'ROMRAMRemRam!' # Password for root access
     ports:
       - '3306:3306' # <Port exposed> : < MySQL Port running inside container>
     expose:
@@ -44,8 +44,8 @@ services:
     image: receiver:latest
     ports:
       - 8080:8080
-    depends_on: 
-      - "kafka"
+    depends_on:
+      - kafka
   storage:
     image: storage:latest
     ports:
