@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css';
+import styles from '../styles/AppStats.module.css';
 
 export default function AppStats() {
     const [isLoaded, setIsLoaded] = useState(false);
@@ -32,17 +33,17 @@ export default function AppStats() {
         return(
             <div>
                 <h1>Latest Stats</h1>
-                <table className={"StatsTable"}>
-					<tbody>
-						<tr>
+                <table className={styles.StatsTable}>
+					<tbody className={styles.StatsTableRows}>
+						<tr className={styles.StatsTableData}>
 							<th>Enrolled Students</th>
 							<th>Dropout Students</th>
 						</tr>
-						<tr>
+						<tr className={styles.StatsTableData}>
 							<td># BP: {stats['num_enrolled_students']}</td>
 							<td># HR: {stats['num_drop_out_students']}</td>
 						</tr>
-						<tr>
+						<tr className={styles.StatsTableData}>
 							<td colspan="2">
                                 Average enrolled student gpa: {stats['avg_enrolled_student_gpa']}
                             </td>
@@ -50,7 +51,7 @@ export default function AppStats() {
                                 Average dropout student gpa: {stats['avg_drop_out_student_gpa']}
                             </td>
 						</tr>
-						<tr>
+						<tr className={styles.StatsTableData}>
                             <td colspan="2">
                                 Min enrolled student gpa: {stats['min_enrolled_student_gpa']}
                             </td>

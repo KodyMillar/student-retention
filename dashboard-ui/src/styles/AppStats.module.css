@@ -1,0 +1,17 @@
+.StatsTable {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50vw;
+}
+
+.StatsTableRows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.StatsTableData {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
