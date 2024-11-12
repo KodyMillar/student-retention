@@ -5,10 +5,10 @@ export default function EndpointAnalyzer(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [log, setLog] = useState(null);
     const [error, setError] = useState(null)
-	const rand_val = Math.floor(Math.random() * 100); // Get a random event from the event store
+    const rand_val = Math.floor(Math.random() * 100); // Get a random event from the event store
 
     const getAnalyzer = () => {
-        fetch(`http://deployment-analyzer-1:8110/university-student-retention/${props.endpoint}?index=${rand_val}`)
+        fetch(`http://ec2-18-206-251-235.compute-1.amazonaws.com:8110/university-student-retention/${props.endpoint}?index=${rand_val}`)
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Analyzer Results for " + props.endpoint)

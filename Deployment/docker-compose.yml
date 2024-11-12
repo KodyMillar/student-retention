@@ -5,7 +5,8 @@ services:
     ports:
       - "2181"
     hostname: zookeeper
-
+    networks:
+      - app
   kafka:
     image: wurstmeister/kafka
     command: [start-kafka.sh]
@@ -24,9 +25,11 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - "zookeeper"
-
+    networks:
+      - app
   db:
     image: mysql:5.7
+    hostname: deployment-db-1
     restart: always
     environment:
       MYSQL_DATABASE: 'events' # Database name
@@ -39,13 +42,16 @@ services:
       - '3306' # Opens port 3306 on the container
     volumes:
       - my-db:/var/lib/mysql # Where our data will be persisted
-
+    networks:
+      - app
   receiver:
     image: receiver:latest
     ports:
       - 8080:8080
     depends_on:
       - kafka
+    networks:
+      - app
   storage:
     image: storage:latest
     ports:
@@ -53,6 +59,8 @@ services:
     depends_on:
       - kafka
       - db
+    networks:
+      - app
   processor:
     image: processing:latest
     ports:
@@ -66,6 +74,8 @@ services:
       - 8110:8110
     depends_on:
       - kafka
+    networks:
+      - app
   dashboard:
     image: dashboard:latest
     ports:
@@ -73,7 +83,13 @@ services:
     depends_on:
       - processor
       - analyzer
+    networks:
+      - app
 
 # Names our volume
 volumes:
   my-db:
+
+networks:
+  app:
+    driver: bridge

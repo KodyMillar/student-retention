@@ -47,10 +47,10 @@ def populate_stats():
 	logger.debug(json_data)
 
 	start_timestamp = json_data['last_updated']
-	if datetime.now() - datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') > timedelta(seconds=6):
-		start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
-	current_date = datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') + timedelta(seconds=5)
-	current_date = datetime.strftime(current_date, '%Y-%m-%dT:%H:%M:%S')
+	#if datetime.now() - datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') > timedelta(seconds=6):
+	#	start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+	# current_date = datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') + timedelta(seconds=5)
+	current_date = datetime.strftime(datetime.now(), '%Y-%m-%dT:%H:%M:%S')
 	#start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=10), '%Y-%m-%dT:%H:%M:%S')
 	#current_date = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
 	logger.debug("\n DATE\n")

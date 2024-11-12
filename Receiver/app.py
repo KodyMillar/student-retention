@@ -38,6 +38,7 @@ def enroll_student(body):
 	}
 
 	msg_str = json.dumps(msg)
+	logger.info(msg_str)
 	producer.produce(msg_str.encode('utf-8'))
 	
 	# logger.info(f"Returned event enroll response (id: {body["trace_id"]}) with status {response.status_code}")

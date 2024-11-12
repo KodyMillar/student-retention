@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Integer, Numeric, Date, DateTime
 from sqlalchemy.sql.functions import now
 from base import Base
+from datetime import datetime
 
 class DropOut(Base):
 
@@ -19,7 +20,7 @@ class DropOut(Base):
         self.program = program
         self.program_gpa = program_gpa
         self.student_dropout_date = student_dropout_date
-        self.date_created = now()
+        self.date_created = datetime.now()
         self.trace_id = trace_id
 
     

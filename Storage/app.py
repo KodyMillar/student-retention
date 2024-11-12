@@ -149,9 +149,11 @@ def process_messages():
 	topic = client.topics[str.encode(app_config['events']['topic'])]
 
 	consumer = topic.get_simple_consumer(consumer_group=b"event_group",
-										reset_offset_on_start=False, # keep offset position
-										auto_offset_reset=OffsetType.LATEST) # reset to latest if no offset
-	
+					     reset_offset_on_start=False, # keep offset position
+					     auto_offset_reset=OffsetType.LATEST) # reset to latest if no offset
+	logger.info("\nCONSUMER")
+	logger.info(consumer)
+	message_count = 0
 	for msg in consumer:
 		msg_str = msg.value.decode('utf-8')
 		msg = json.loads(msg_str)
@@ -167,8 +169,11 @@ def process_messages():
 				logger.info("Storing drop_out event to database")
 				withdraw_student(payload)
 			
-			consumer.consume()
-			consumer.commit_offsets()
+			message_count += 1
+			logger.info(message_count)
+			#consumer.consume()
+			if message_count % 10 == 0:
+				consumer.commit_offsets()
 
 		except Exception as e:
 			logger.error(f"Error: {e}")

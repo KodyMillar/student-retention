@@ -22,7 +22,7 @@ class Enroll(Base):
         self.highschool_gpa = highschool_gpa
         self.student_acceptance_date = student_acceptance_date
         self.program_starting_date = program_starting_date
-        self.date_created = now()
+        self.date_created = datetime.now()
         self.trace_id = trace_id
 
     
