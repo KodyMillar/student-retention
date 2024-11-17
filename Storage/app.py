@@ -1,6 +1,7 @@
 import connexion
 from connexion import NoContent
 from datetime import datetime
+import time
 
 from sqlalchemy import create_engine, and_
 from sqlalchemy.orm import sessionmaker
@@ -8,8 +9,6 @@ from base import Base
 from enroll import Enroll
 from drop_out import DropOut
 
-import mysql.connector
-import pymysql
 import yaml
 import logging
 import logging.config
@@ -145,8 +144,19 @@ def get_drop_out_student(start_timestamp, end_timestamp):
 def process_messages():
 	hostname = "%s:%d" % (app_config['events']['hostname'],
 						app_config['events']['port'])
-	client = KafkaClient(hosts=hostname)
-	topic = client.topics[str.encode(app_config['events']['topic'])]
+	
+	max_retries = app_config['events']['retries']
+	current_retries = 0 
+	while current_retries < max_retries:
+		logger.info(f"Attempting to connect to Kafka broker: {current_retries} retries")
+		try:
+			client = KafkaClient(hosts=hostname)
+			topic = client.topics[str.encode(app_config['events']['topic'])]
+		except:
+			logger.error("Kafka connection failed")
+			time.sleep(app_config['events']['retry_delay'])
+			current_retries += 1
+			
 
 	consumer = topic.get_simple_consumer(consumer_group=b"event_group",
 					     reset_offset_on_start=False, # keep offset position

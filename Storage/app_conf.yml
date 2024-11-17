@@ -9,3 +9,5 @@ events:
   hostname: deployment-kafka-1
   port: 9092
   topic: events
+  retries: 5
+  retry_delay: 5000
