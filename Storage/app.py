@@ -165,7 +165,7 @@ def process_messages():
 					     auto_offset_reset=OffsetType.LATEST) # reset to latest if no offset
 	logger.info("\nCONSUMER")
 	logger.info(consumer)
-	message_count = 0
+	#message_count = 0
 	for msg in consumer:
 		msg_str = msg.value.decode('utf-8')
 		msg = json.loads(msg_str)
@@ -181,11 +181,12 @@ def process_messages():
 				logger.info("Storing drop_out event to database")
 				withdraw_student(payload)
 			
-			message_count += 1
+			#message_count += 1
 			logger.info(message_count)
+			consumer.commit_offsets()
 			#consumer.consume()
-			if message_count % 10 == 0:
-				consumer.commit_offsets()
+			#if message_count % 10 == 0:
+			#	consumer.commit_offsets()
 
 		except Exception as e:
 			logger.error(f"Error: {e}")
