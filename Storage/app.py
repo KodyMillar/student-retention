@@ -145,6 +145,7 @@ def process_messages():
 	hostname = "%s:%d" % (app_config['events']['hostname'],
 						app_config['events']['port'])
 	
+	consumer = None
 	max_retries = app_config['events']['retries']
 	current_retries = 0 
 	while current_retries < max_retries:
@@ -152,6 +153,9 @@ def process_messages():
 		try:
 			client = KafkaClient(hosts=hostname)
 			topic = client.topics[str.encode(app_config['events']['topic'])]
+			consumer = topic.get_simple_consumer(consumer_group=b"event_group",
+								reset_offset_on_start=False, # keep offset position
+								auto_offset_reset=OffsetType.LATEST) # reset to latest if no offset
 			logger.info("Sucessfully connected to Kafka broker")
 			break
 		except:
@@ -160,9 +164,6 @@ def process_messages():
 			current_retries += 1
 			
 
-	consumer = topic.get_simple_consumer(consumer_group=b"event_group",
-					     reset_offset_on_start=False, # keep offset position
-					     auto_offset_reset=OffsetType.LATEST) # reset to latest if no offset
 	logger.info("\nCONSUMER")
 	logger.info(consumer)
 	#message_count = 0
