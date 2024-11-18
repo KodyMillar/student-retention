@@ -39,9 +39,10 @@ db = app_config['datastore']['db']
 # in this case, mysql is the dialect and pymysql is the name of the DBAPI 
 # pool_recycle will replace the connection after 10 minutes
 # pool_pre_ping will run a test query and replace connection if not responding
-# pool_size 
+# pool_size will accept up to 10 connections at a time or else will queue the query
+# Size of 10 to accomodate 10 thread requests per loop
 DB_ENGINE = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db}',
-						  pool_recycle=600, pool_pre_ping=True, pool_size=2)
+						  pool_recycle=600, pool_pre_ping=True, pool_size=10)
 Base.metadata.bind = DB_ENGINE
 Base.metadata.create_all(DB_ENGINE)
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
