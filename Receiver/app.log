@@ -29331,3 +29331,5 @@
 2024-10-29 15:42:23,350 - basicLogger - INFO - Received event drop-out request with a trace id of d844a1ed-1e1b-400e-b7b9-76adff95e486
 2024-10-29 15:42:28,539 - basicLogger - INFO - Received event enroll request with a trace id of 4f7c1b13-bbb8-4ac7-ab19-27b5a94bf1bc
 2024-10-29 15:42:29,094 - basicLogger - INFO - Received event drop-out request with a trace id of 5f17a5ba-be97-4557-8ac9-47d4a1291c24
+2024-11-17 21:26:41,415 - basicLogger - INFO - Retry 0 of connecting to kafka broker
+2024-11-17 21:27:01,742 - basicLogger - ERROR - Could not connect to Kafka broker

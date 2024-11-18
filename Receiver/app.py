@@ -8,6 +8,7 @@ import logging.config
 import uuid
 import json
 import datetime
+import time
 from pykafka import KafkaClient
 
 
@@ -28,9 +29,10 @@ def enroll_student(body):
 	# header = {"Content-Type": "application/json"}
 	
 	# response = requests.post(app_config["enroll"]["url"], json=body, headers=header)
-	client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-	topic = client.topics[str.encode(app_config['events']['topic'])]
-	producer = topic.get_sync_producer()
+	# client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+	# topic = client.topics[str.encode(app_config['events']['topic'])]
+	# producer = topic.get_sync_producer()
+	global producer
 	msg = {
 		"type": "enroll",
 		"datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
@@ -53,11 +55,7 @@ def withdraw_student(body):
 
 	# header = {"Content-Type": "application/json"}
 	# response = requests.post(app_config["drop-out"]["url"], json=body, headers=header)
-
-	client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-	topic = client.topics[str.encode(app_config['events']['topic'])]
-	producer = topic.get_sync_producer()
-	
+	global producer
 	msg = {
 		"type": "drop_out",
 		"datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
@@ -76,4 +74,20 @@ app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
+	max_retries = app_config['events']['retries']
+	current_retry = 0
+	while current_retry <= max_retries:
+		try:
+			logger.info(f"Retry {current_retry} of connecting to kafka broker") 
+			global producer
+			client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+			topic = client.topics[str.encode(app_config['events']['topic'])]
+			producer = topic.get_sync_producer()
+			logger.info("Successfully connected to Kafka broker")
+			break
+		except:
+			logger.error("Could not connect to Kafka broker")
+			time.sleep(app_config['events']['retry_delay'])
+			current_retry += 1
+			
 	app.run(port=8080, host="0.0.0.0")

@@ -10,4 +10,4 @@ events:
   port: 9092
   topic: events
   retries: 5
-  retry_delay: 5000
+  retry_delay: 5
