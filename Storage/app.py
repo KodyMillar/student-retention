@@ -34,7 +34,14 @@ host = app_config['datastore']['hostname']
 port = app_config['datastore']['port']
 db = app_config['datastore']['db']
 
-DB_ENGINE = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db}')
+# create_engine creates an engine object to provide a source of database connectivity
+# creates a dialect tailored to Postgresql as well as pool object which will establish DBAPI connection
+# in this case, mysql is the dialect and pymysql is the name of the DBAPI 
+# pool_recycle will replace the connection after 10 minutes
+# pool_pre_ping will run a test query and replace connection if not responding
+# pool_size 
+DB_ENGINE = create_engine(f'mysql+pymysql://{user}:{password}@{host}:{port}/{db}',
+						  pool_recycle=600, pool_pre_ping=True, pool_size=2)
 Base.metadata.bind = DB_ENGINE
 Base.metadata.create_all(DB_ENGINE)
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
@@ -164,9 +171,6 @@ def process_messages():
 			current_retries += 1
 			
 
-	logger.info("\nCONSUMER")
-	logger.info(consumer)
-	#message_count = 0
 	for msg in consumer:
 		msg_str = msg.value.decode('utf-8')
 		msg = json.loads(msg_str)

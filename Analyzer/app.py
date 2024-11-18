@@ -19,6 +19,7 @@ with open("log_conf.yml", "r") as f:
 
 logger = logging.getLogger('basicLogger')
 
+
 def get_enroll_student(index):
 	"""Get enroll event by index in History"""
 	hostname = "%s:%d" % (app_config['events']['hostname'], 
@@ -43,6 +44,7 @@ def get_enroll_student(index):
 		logger.error("No more messages found")
 	logger.error("Could not find enroll event at index %d" % index)
 	return { "message": "Not Found" }, 404
+
 
 def get_drop_out_student(index):
 	"""Get drop_out event by index in History"""
@@ -90,10 +92,6 @@ def get_event_stats():
 				num_enrolls += 1
 			elif msg['type'] == "drop_out":
 				num_drop_outs += 1
-            
-			# Find the event at the index you want and
-            # return code 200
-            # i.e., return event, 200
 	except:
 		logger.error("No more messages found")
 	logger.info("Got %s enroll events and %d drop out events" % (num_enrolls, num_drop_outs))
