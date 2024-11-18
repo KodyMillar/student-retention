@@ -182,12 +182,7 @@ def process_messages():
 				logger.info("Storing drop_out event to database")
 				withdraw_student(payload)
 			
-			#message_count += 1
-			logger.info(message_count)
 			consumer.commit_offsets()
-			#consumer.consume()
-			#if message_count % 10 == 0:
-			#	consumer.commit_offsets()
 
 		except Exception as e:
 			logger.error(f"Error: {e}")
