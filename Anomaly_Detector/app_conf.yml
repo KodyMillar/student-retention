@@ -1,0 +1,12 @@
+version: 2
+thresholds:
+  enroll: 4.0
+  drop_out: 4.0
+events:
+  hostname: deployment-kafka-1
+  port: 9092
+  topic: events
+  retries: 5
+  retry_delay: 5
+store:
+  file: anomalies.json

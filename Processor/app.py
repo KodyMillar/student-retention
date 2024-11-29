@@ -11,6 +11,7 @@ import json
 from datetime import datetime, timedelta
 from statistics import mean
 from connexion import NoContent
+from flask_cors import CORS
 
 
 app_conf_file = ""
@@ -152,16 +153,21 @@ def init_scheduler():
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("openapi.yaml", strict_validation=True, validate_responses=True)
+app.add_api("openapi.yaml", base_path="/processing", strict_validation=True, validate_responses=True)
 
-app.add_middleware(
-	CORSMiddleware,
-	position=MiddlewarePosition.BEFORE_EXCEPTION, # can apply custom exceptions
-	allow_origins=['*'],
-	allow_credentials=True,
-	allow_methods=['GET'],
-	allow_headers=['*']
-)
+# Connexion wraps around Flask, and app.app allows you to access the underlying Flask application
+if not "TARGET_ENV" in os.environ or os.environ['TARGET_ENV'] != "test":
+	CORSMiddleware(app.app)
+	app.app.config['CORS_HEADERS'] = 'Content-Type'
+
+# app.add_middleware(
+# 	CORSMiddleware,
+# 	position=MiddlewarePosition.BEFORE_EXCEPTION, # can apply custom exceptions
+# 	allow_origins=['*'],
+# 	allow_credentials=True,
+# 	allow_methods=['GET'],
+# 	allow_headers=['*']
+# )
 
 if __name__ == "__main__":
 	init_scheduler()
