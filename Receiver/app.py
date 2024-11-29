@@ -10,16 +10,32 @@ import json
 import datetime
 import time
 from pykafka import KafkaClient
+import os
 
 
-with open("app_conf.yml", "r") as f:
+app_conf_file = ""
+log_conf_file = ""
+
+if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
+	print("In test environment")
+	app_conf_file = "/config/app_conf.yml"
+	log_conf_file = "/config/log_conf.yml"
+else:
+	print("In Dev Environment")
+	app_conf_file = "app_conf.yml"
+	log_conf_file = "log_conf.yml"
+
+with open(app_conf_file, "r") as f:
 	app_config = yaml.safe_load(f.read())
 
-with open("log_conf.yml", "r") as f:
+with open(log_conf_file, "r") as f:
 	log_config = yaml.safe_load(f.read())
 	logging.config.dictConfig(log_config)
 
 logger = logging.getLogger('basicLogger')
+
+logger.info("App Conf File: %s" % app_conf_file)
+logger.info("Log Conf File: %s" % log_conf_file)
 
 producer = None
 max_retries = app_config['events']['retries']

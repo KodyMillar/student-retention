@@ -53,10 +53,15 @@ services:
     image: receiver:latest
     ports:
       - 8080:8080
-    depends_on:
-      - kafka
     networks:
       - app
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/ubuntu/config/receiver:/config
+      - /home/ubuntu/logs:/logs
+    depends_on:
+      - "kafka"
   storage:
     image: storage:latest
     ports:
@@ -66,11 +71,22 @@ services:
       - db
     networks:
       - app
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/ubuntu/config/storage:/config
+      - /home/ubuntu/logs:/logs
   processor:
     image: processing:latest
     ports:
       - 8100:8100
     network_mode: "host"
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/ubuntu/config/processing:/config
+      - /home/ubuntu/logs:/logs
+      - processing-db:/data
     depends_on:
       - storage
   analyzer:
@@ -81,6 +97,11 @@ services:
       - kafka
     networks:
       - app
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/ubuntu/config/analyzer:/config
+      - /home/ubuntu/logs:/logs
   dashboard:
     image: dashboard:latest
     ports:
@@ -94,6 +115,7 @@ services:
 # Names our volume
 volumes:
   my-db:
+  processing-db:
 
 networks:
   app:

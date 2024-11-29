@@ -13,14 +13,42 @@ from statistics import mean
 from connexion import NoContent
 
 
-with open("app_conf.yml", "r") as f:
-	app_config = yaml.safe_load(f.read())
+app_conf_file = ""
+log_conf_file = ""
 
-with open("log_conf.yml", "r") as f:
-	log_config = yaml.safe_load(f.read())
-	logging.config.dictConfig(log_config)
+if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
+        print("In test environment")
+        app_conf_file = "/config/app_conf.yml"
+        log_conf_file = "/config/log_conf.yml"
+else:
+        print("In Dev Environment")
+        app_conf_file = "app_conf.yml"
+        log_conf_file = "log_conf.yml"
+
+with open(app_conf_file, "r") as f:
+        app_config = yaml.safe_load(f.read())
+
+with open(log_conf_file, "r") as f:
+        log_config = yaml.safe_load(f.read())
+        logging.config.dictConfig(log_config)
 
 logger = logging.getLogger('basicLogger')
+
+logger.info("App Conf File: %s" % app_conf_file)
+logger.info("Log Conf File: %s" % log_conf_file)
+
+if not os.path.isfile(app_config['datastore']['filename']):
+	base_stats = {
+		"num_enrolled_students": 0,
+		"min_enrolled_student_gpa": 0,
+		"avg_enrolled_student_gpa": 0,
+		"num_drop_out_students": 0,
+		"max_drop_out_student_gpa": 0,
+		"avg_drop_out_student_gpa": 0,
+		"last_updated": datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+	}
+	with open(app_config['datastore']['filename'], "w") as f:
+		json.dump(base_stats, f, indent=4)
 
 def get_json_data():
 	if os.path.isfile(app_config['datastore']['filename']):
@@ -46,13 +74,11 @@ def populate_stats():
 
 	logger.debug(json_data)
 
-	start_timestamp = json_data['last_updated']
-	#if datetime.now() - datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') > timedelta(seconds=6):
-	#	start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
-	# current_date = datetime.strptime(start_timestamp, '%Y-%m-%dT:%H:%M:%S') + timedelta(seconds=5)
-	current_date = datetime.strftime(datetime.now(), '%Y-%m-%dT:%H:%M:%S')
-	#start_timestamp = datetime.strftime(datetime.now() - timedelta(seconds=10), '%Y-%m-%dT:%H:%M:%S')
-	#current_date = datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+	try:
+		start_timestamp = json_data['last_updated']
+		current_date = datetime.strftime(datetime.now(), '%Y-%m-%dT:%H:%M:%S')
+	except:
+		logger.debug("OH MY GOSH")
 	logger.debug("\n DATE\n")
 	logger.debug(current_date)
 
@@ -100,10 +126,6 @@ def populate_stats():
 
 def get_stats():
 	logger.info("Request for statistics has been received")
-
-	if not os.path.isfile(app_config['datastore']['filename']):
-		logger.error("Statistics do not exist")
-		return
 	
 	statistics = {}
 	try:
