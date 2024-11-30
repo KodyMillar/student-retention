@@ -106,6 +106,19 @@ services:
       - /home/ubuntu/logs:/logs
     depends_on:
       - kafka
+  anomalies:
+    image: anomalies:latest
+    hostname: anomalies
+    ports:
+      - "8120"
+    volumes:
+      - /home/ubuntu/config/anomalies:/config
+      - /home/ubuntu/logs:/logs
+      - anomalies-db:/data
+    networks:
+      - "api.network"
+    depends_on:
+      - kafka
   dashboard:
     image: dashboard:latest
     hostname: dashboard
@@ -138,6 +151,7 @@ services:
 volumes:
   my-db:
   processing-db:
+  anomalies-db:
 
 networks:
   api.network:
