@@ -11,6 +11,7 @@ import os
 
 from pykafka import KafkaClient
 from pykafka.common import OffsetType
+from threading import Thread
 
 
 app_conf_file = ""
@@ -134,6 +135,9 @@ app = connexion.FlaskApp(__name__, specification_dir="")
 app.add_api('openapi.yaml', base_path="/anomalies", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":
+    t1 = Thread(target=get_events)
+    t1.daemon = True
+    t1.start()
     app.run(port=8120, host="0.0.0.0")
 
     logger.info("Threshold of enroll High School GPA: Higher than %s", 
