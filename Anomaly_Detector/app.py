@@ -88,6 +88,9 @@ def get_events():
                 }
                 current_anomalies.append(anomaly)
 
+                with open(app_config['store']['file'], "w") as f:
+                    json.dump(current_anomalies, f, indent=4)
+                    
                 logger.info("Anomaly added to database: %s", anomaly)
                 
             elif msg['type'] == "drop_out" and payload['program_gpa'] < drop_out_threshold:
@@ -101,14 +104,15 @@ def get_events():
                 }
                 current_anomalies.append(anomaly)
                 
+                with open(app_config['store']['file'], "w") as f:
+                    json.dump(current_anomalies, f, indent=4)
+
                 logger.info("Anomaly added to database: %s", anomaly)
                 
             consumer.commit_offsets()
         except Exception as e:
             logger.info(f"Error: {e}")
         
-    with open(app_config['store']['file'], "w") as f:
-        json.dump(current_anomalies, f, indent=4)
 
 def get_anomalies(anomaly_type):
     logger.debug("Received request for anomaly type %s", anomaly_type)
