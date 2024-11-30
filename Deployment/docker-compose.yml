@@ -117,6 +117,8 @@ services:
       - anomalies-db:/data
     networks:
       - "api.network"
+    environment:
+      - TARGET_ENV=test
     depends_on:
       - kafka
   dashboard:
