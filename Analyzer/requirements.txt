@@ -3,3 +3,4 @@ swagger-ui-bundle==1.1.0
 uvicorn==0.32.0
 requests==2.32.3
 pykafka==2.8.0
+flask-cors==5.0.0

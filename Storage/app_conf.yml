@@ -2,7 +2,7 @@ version: 2
 datastore:
   user: kody
   password: "ROMRAMRemRam!"
-  hostname: ec2-18-208-107-45.compute-1.amazonaws.com
+  hostname: ec2-18-205-115-253.compute-1.amazonaws.com
   port: 3306
   db: events
 events:
