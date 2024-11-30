@@ -59,7 +59,7 @@ def connect_to_broker():
             logger.error("Error: %s", e)
             time.sleep(app_config['events']['retry_delay'])
             current_retry += 1
-        raise ConnectionRefusedError("Could not connect to Kafka Broker")
+    raise ConnectionRefusedError("Could not connect to Kafka Broker")
 
 # Must change json to list and read from json file first to update data
 def get_events():
