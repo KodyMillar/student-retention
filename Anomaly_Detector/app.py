@@ -83,7 +83,7 @@ def get_events():
                     "event_type": "enroll",
                     "anomaly_type": "Too High",
                     "description": f"High School GPA {payload['highschool_gpa']} is above {enroll_threshold}",
-                    "date_detected": datetime.now()
+                    "date_detected": datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)
 
@@ -96,7 +96,7 @@ def get_events():
                     "event_type": "drop_out",
                     "anomaly_type": "Too Low",
                     "description": f"Program GPA {payload['program_gpa']} is above {drop_out_threshold}",
-                    "date_detected": datetime.now()
+                    "date_detected": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)
                 
