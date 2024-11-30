@@ -20,5 +20,5 @@ loggers:
     propagate: no
 root:
   level: DEBUG
-  handlers: console
+  handlers: [console]
 disable_existing_loggers: False

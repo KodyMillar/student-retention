@@ -40,7 +40,7 @@ if not os.path.isfile(app_config['store']['file']):
         json.dump([], f)
 
 def connect_to_broker():
-    hostname = "%s:%d", (app_config['events']['hostname'],
+    hostname = "%s:%d" % (app_config['events']['hostname'],
                          app_config['events']['port'])
     
     max_retries = app_config['events']['retries']
