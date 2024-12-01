@@ -56,7 +56,7 @@ def connect_to_broker():
             logger.info("Successfully connected to Kafka broker")
             return consumer
         except Exception as e:
-            logger.error("Error: %s", e)
+            logger.error("Error: %s" % e)
             time.sleep(app_config['events']['retry_delay'])
             current_retry += 1
     raise ConnectionRefusedError("Could not connect to Kafka Broker")
@@ -79,43 +79,42 @@ def get_events():
             drop_out_threshold = app_config['thresholds']['drop_out']
             if msg['type'] == "enroll" and payload['highschool_gpa'] > enroll_threshold:
                 anomaly = {
-                    "event_uuid": payload['student_id'],
+                    "event_id": payload['student_id'],
                     "trace_id": payload['trace_id'],
                     "event_type": "enroll",
                     "anomaly_type": "Too High",
                     "description": f"High School GPA {payload['highschool_gpa']} is above {enroll_threshold}",
-                    "date_detected": datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S")
+                    "timestamp": datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)
 
                 with open(app_config['store']['file'], "w") as f:
                     json.dump(current_anomalies, f, indent=4)
                     
-                logger.info("Anomaly added to database: %s", anomaly)
+                logger.info("Anomaly added to database: %s" % anomaly)
                 
             elif msg['type'] == "drop_out" and payload['program_gpa'] < drop_out_threshold:
                 anomaly = {
-                    "event_uuid": payload['student_id'],
+                    "event_id": payload['student_id'],
                     "trace_id": payload['trace_id'],
                     "event_type": "drop_out",
                     "anomaly_type": "Too Low",
                     "description": f"Program GPA {payload['program_gpa']} is above {drop_out_threshold}",
-                    "date_detected": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+                    "timestamp": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)
                 
                 with open(app_config['store']['file'], "w") as f:
                     json.dump(current_anomalies, f, indent=4)
 
-                logger.info("Anomaly added to database: %s", anomaly)
+                logger.info("Anomaly added to database: %s" % anomaly)
                 
             consumer.commit_offsets()
         except Exception as e:
-            logger.info(f"Error: {e}")
+            logger.error(f"Error: {e}")
         
-
 def get_anomalies(anomaly_type):
-    logger.debug("Received request for anomaly type %s", anomaly_type)
+    logger.debug("Received request for anomaly type %s" % anomaly_type)
 
     with open(app_config['store']['file'], 'r') as f:
         current_anomalies = json.load(f)
@@ -123,17 +122,17 @@ def get_anomalies(anomaly_type):
     requested_anomalies = []
 
     for event in current_anomalies:
-        if event['anomaly_type'] == anomaly_type:
+        if event['anomaly_type'].replace(' ', '') == anomaly_type:
             requested_anomalies.append(event)
 
     sorted(requested_anomalies, key=sort_by_date, reverse=True)
 
-    logger.info("Anomalies returned: %s", requested_anomalies)
+    logger.info("Anomalies returned: %s" % requested_anomalies)
 
     return requested_anomalies, 200
 
 def sort_by_date(event):
-    return event['date_detected']
+    return event['timestamp']
 
 app = connexion.FlaskApp(__name__, specification_dir="")
 app.add_api('openapi.yaml', base_path="/anomalies", strict_validation=True, validate_responses=True)
