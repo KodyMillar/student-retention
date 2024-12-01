@@ -3,10 +3,12 @@ import './App.css';
 
 import EndpointAnalyzer from './components/EndpointAnalyzer'
 import AppStats from './components/AppStats'
+import Anomaly from './components/Anomalies';
 
 function App() {
 
     const endpoints = ["enroll", "drop-out"]
+    const anomalyTypes = ["TooLow", "TooHigh"]
 
     const rendered_endpoints = endpoints.map((endpoint) => {
         return <EndpointAnalyzer key={endpoint} endpoint={endpoint}/>
@@ -19,6 +21,10 @@ function App() {
                 <AppStats/>
                 <h1>Analyzer Endpoints</h1>
                 {rendered_endpoints}
+                <h1>Most Recent Anomalies</h1>
+                {endpoints.map((type) => (
+                    <Anomaly key={type} anomalyType={type} />
+                ))}
             </div>
         </div>
     );

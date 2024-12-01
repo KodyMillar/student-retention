@@ -9,7 +9,7 @@ export default function AppStats() {
 
     const getStats = () => {
 	
-        fetch(`http://ec2-18-205-115-253.compute-1.amazonaws.com/processing/stats`)
+        fetch(`ec2-52-90-75-251.compute-1.amazonaws.com/processing/stats`)
             .then(res => res.json())
             .then((result)=>{
 				console.log("Received Stats")
@@ -40,8 +40,8 @@ export default function AppStats() {
 							<th>Dropout Students</th>
 						</tr>
 						<tr className={styles.StatsTableData}>
-							<td># BP: {stats['num_enrolled_students']}</td>
-							<td># HR: {stats['num_drop_out_students']}</td>
+							<td># Enrolled: {stats['num_enrolled_students']}</td>
+							<td># Drop Outs: {stats['num_drop_out_students']}</td>
 						</tr>
 						<tr className={styles.StatsTableData}>
 							<td colspan="2">
