@@ -50,7 +50,7 @@ def connect_to_broker():
             logger.info("retry %s of connecting to kafka broker", current_retry)
             client = KafkaClient(hosts=hostname)
             topic = client.topics[str.encode(app_config['events']['topic'])]
-            consumer = topic.get_simple_consumer(consumer_group=b"event_group",
+            consumer = topic.get_simple_consumer(consumer_group=b"anomaly_group",
                                                 reset_offset_on_start=False,
                                                 auto_offset_reset=OffsetType.LATEST)
             logger.info("Successfully connected to Kafka broker")
@@ -84,7 +84,7 @@ def get_events():
                     "event_type": "enroll",
                     "anomaly_type": "Too High",
                     "description": f"High School GPA {payload['highschool_gpa']} is above {enroll_threshold}",
-                    "timestamp": datetime.strftime(datetime.now(), "%y-%m-%d %H:%M:%S")
+                    "timestamp": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)
 
@@ -126,7 +126,7 @@ def get_anomalies(anomaly_type):
             if event['anomaly_type'].replace(' ', '') == anomaly_type:
                 requested_anomalies.append(event)
 
-        sorted(requested_anomalies, key=sort_by_date, reverse=True)
+        requested_anomalies = sorted(requested_anomalies, key=sort_by_date, reverse=True)
 
         logger.info("Anomalies returned: %s" % requested_anomalies)
 
@@ -135,7 +135,7 @@ def get_anomalies(anomaly_type):
         logger.error("Error: %s" % e)
 
 def sort_by_date(event):
-    return event['timestamp']
+    return datetime.strptime(event['timestamp'], "%Y-%m-%d %H:%M:%S")
 
 app = connexion.FlaskApp(__name__, specification_dir="")
 app.add_api('openapi.yaml', base_path="/anomalies", strict_validation=True, validate_responses=True)
