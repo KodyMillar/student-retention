@@ -99,7 +99,7 @@ def get_events():
                     "trace_id": payload['trace_id'],
                     "event_type": "drop_out",
                     "anomaly_type": "Too Low",
-                    "description": f"Program GPA {payload['program_gpa']} is above {drop_out_threshold}",
+                    "description": f"Program GPA {payload['program_gpa']} is below {drop_out_threshold}",
                     "timestamp": datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
                 }
                 current_anomalies.append(anomaly)

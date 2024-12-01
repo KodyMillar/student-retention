@@ -6,8 +6,8 @@ function Anomalies({ anomalyType }) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
 
-    const getAnomaly = async () => {
-        await fetch(`http://ec2-52-90-75-251.compute-1.amazonaws.com/anomalies/anomalies/?anomaly_type=${anomalyType}`, {
+    const getAnomaly = () => {
+        fetch(`http://ec2-52-90-75-251.compute-1.amazonaws.com/anomalies/anomalies?anomaly_type=${anomalyType}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
@@ -16,7 +16,7 @@ function Anomalies({ anomalyType }) {
         .then((response) => response.json())
         .then((result) => {
             setAnomaly(result[0]);
-            setIsLoaded(True);
+            setIsLoaded(true);
         })
         .catch((err) => setError(err));
     };
@@ -33,7 +33,7 @@ function Anomalies({ anomalyType }) {
     } else if (isLoaded === true){
         return (
             <div>
-                    <h2>{anomaly.anomaly_type}</h2>
+                    <h2>{anomaly.event_type}</h2>
                     <div>
                         <h5>{anomaly.event_id}</h5>
                         <h5>{anomaly.description}</h5>
