@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import '../App.css';
 
 function Anomalies({ anomalyType }) {
     const [anomaly, setAnomaly] = useState({});
@@ -24,17 +25,23 @@ function Anomalies({ anomalyType }) {
         const intervalId = setInterval(getAnomaly, 4000);
         return () => clearInterval(intervalId);
     }, [getAnomaly]);
-    
-    return (
-        <div>
-                <h2>{anomaly.anomaly_type}</h2>
-                <div>
-                    <h5>{anomaly.event_id}</h5>
-                    <h5>{anomaly.description}</h5>
-                    <h5>Detected on {anomaly.timestamp}</h5>
-                </div>
-        </div>
-    );
+
+    if (error){
+        return (<div className={"error"}>Error found when fetching from API</div>)
+    } else if (isLoaded === false){
+        return(<div>Loading...</div>)
+    } else if (isLoaded === true){
+        return (
+            <div>
+                    <h2>{anomaly.anomaly_type}</h2>
+                    <div>
+                        <h5>{anomaly.event_id}</h5>
+                        <h5>{anomaly.description}</h5>
+                        <h5>Detected on {anomaly.timestamp}</h5>
+                    </div>
+            </div>
+        );
+    }
 };
 
 export default Anomalies;

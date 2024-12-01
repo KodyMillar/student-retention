@@ -22,13 +22,12 @@ function App() {
                 <h1>Analyzer Endpoints</h1>
                 {rendered_endpoints}
                 <h1>Most Recent Anomalies</h1>
-                {endpoints.map((type) => (
+                {anomalyTypes.map((type) => (
                     <Anomaly key={type} anomalyType={type} />
                 ))}
             </div>
         </div>
     );
-
 }
 
 
