@@ -40,6 +40,15 @@ if not os.path.isfile(app_config['store']['file']):
         json.dump([], f)
 
 def connect_to_broker():
+    """
+    Connects to the Kafka broker specified in the app_config.yml file
+
+    Returns:
+        object: a simple consumer Kafka instance
+
+    Raises:
+        ConnectionRefusedError: If unable to connect to Kafka broker after 5 tries
+    """
     hostname = "%s:%d" % (app_config['events']['hostname'],
                          app_config['events']['port'])
     
@@ -61,8 +70,14 @@ def connect_to_broker():
             current_retry += 1
     raise ConnectionRefusedError("Could not connect to Kafka Broker")
 
-# Must change json to list and read from json file first to update data
 def get_events():
+    """
+    Consumes all kafka messages and checks for any anomalies
+    to add to the JSON datastore
+
+    Returns:
+        None
+    """
     with open(app_config['store']['file'], 'r') as f:
         current_anomalies = json.load(f)
     
@@ -114,6 +129,16 @@ def get_events():
             logger.error(f"Error: {e}")
         
 def get_anomalies(anomaly_type):
+    """
+    Runs when a GET request is sent to the /anomalies endpoint
+    Retrieves all anomalies by the anomaly type requested
+    
+    :param string anomaly_type: the type of anomaly
+
+    Returns:
+        list: A list of anomaly objects that match the anomaly type requested
+        int: Status code 200 if the anomalies are retrieved successfully
+    """
     try:
         logger.debug("Received request for anomaly type %s" % anomaly_type)
 
