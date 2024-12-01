@@ -114,22 +114,25 @@ def get_events():
             logger.error(f"Error: {e}")
         
 def get_anomalies(anomaly_type):
-    logger.debug("Received request for anomaly type %s" % anomaly_type)
+    try:
+        logger.debug("Received request for anomaly type %s" % anomaly_type)
 
-    with open(app_config['store']['file'], 'r') as f:
-        current_anomalies = json.load(f)
+        with open(app_config['store']['file'], 'r') as f:
+            current_anomalies = json.load(f)
 
-    requested_anomalies = []
+        requested_anomalies = []
 
-    for event in current_anomalies:
-        if event['anomaly_type'].replace(' ', '') == anomaly_type:
-            requested_anomalies.append(event)
+        for event in current_anomalies:
+            if event['anomaly_type'].replace(' ', '') == anomaly_type:
+                requested_anomalies.append(event)
 
-    sorted(requested_anomalies, key=sort_by_date, reverse=True)
+        sorted(requested_anomalies, key=sort_by_date, reverse=True)
 
-    logger.info("Anomalies returned: %s" % requested_anomalies)
+        logger.info("Anomalies returned: %s" % requested_anomalies)
 
-    return requested_anomalies, 200
+        return requested_anomalies, 200
+    except Exception as e:
+        logger.error("Error: %s" % e)
 
 def sort_by_date(event):
     return event['timestamp']
