@@ -123,3 +123,4 @@ app.add_api("openapi.yaml", base_path="/receiver", strict_validation=True, valid
 
 if __name__ == "__main__":
     app.run(port=8080, host="0.0.0.0")
+    logger.info("Receiver service running on port 8080")
