@@ -1,11 +1,11 @@
 import mysql.connector
-from app import app_config
+from app import APP_CONFIG
 
 
-db_conn = mysql.connector.connect(host=app_config['datastore']['hostname'],
-                                  user=app_config['datastore']['user'], 
-                                  password=app_config['datastore']['password'], 
-                                  database=app_config['datastore']['db'])
+db_conn = mysql.connector.connect(host=APP_CONFIG['datastore']['hostname'],
+                                  user=APP_CONFIG['datastore']['user'], 
+                                  password=APP_CONFIG['datastore']['password'], 
+                                  database=APP_CONFIG['datastore']['db'])
 
 db_cursor = db_conn.cursor()
 db_cursor.execute('''
