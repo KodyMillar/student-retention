@@ -51,6 +51,7 @@ services:
   receiver:
     image: kodymills395/receiver:latest
     hostname: receiver
+    pull_policy: always
     ports:
       - "8080"
     networks:
@@ -65,6 +66,7 @@ services:
   storage:
     image: kodymills395/storage:latest
     hostname: storage
+    pull_policy: always
     ports:
       - "8090"
     depends_on:
@@ -80,6 +82,7 @@ services:
   processor:
     image: kodymills395/processing:latest
     hostname: processing
+    pull_policy: always
     ports:
       - "8100"
     networks:
@@ -95,6 +98,7 @@ services:
   analyzer:
     image: kodymills395/analyzer:latest
     hostname: analyzer
+    pull_policy: always
     ports:
       - "8110"
     networks:
