@@ -49,7 +49,7 @@ services:
     volumes:
       - my-db:/var/lib/mysql # Where our data will be persisted
   receiver:
-    image: receiver:latest
+    image: kodymills395/receiver:latest
     hostname: receiver
     ports:
       - "8080"
@@ -63,7 +63,7 @@ services:
     depends_on:
       - "kafka"
   storage:
-    image: storage:latest
+    image: kodymills395/storage:latest
     hostname: storage
     ports:
       - "8090"
@@ -78,7 +78,7 @@ services:
       - /home/ubuntu/config/storage:/config
       - /home/ubuntu/logs:/logs
   processor:
-    image: processing:latest
+    image: kodymills395/processing:latest
     hostname: processing
     ports:
       - "8100"
@@ -93,7 +93,7 @@ services:
     depends_on:
       - storage
   analyzer:
-    image: analyzer:latest
+    image: kodymills395/analyzer:latest
     hostname: analyzer
     ports:
       - "8110"
