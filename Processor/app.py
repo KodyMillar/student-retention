@@ -1,4 +1,3 @@
-import requests
 import yaml
 import logging
 import logging.config
@@ -7,9 +6,8 @@ import os
 import json
 from datetime import datetime, timedelta
 from statistics import mean
+import requests
 import connexion
-from connexion.middleware import MiddlewarePosition
-from starlette.middleware.cors import CORSMiddleware
 from connexion import NoContent
 from flask_cors import CORS
 
@@ -18,20 +16,20 @@ APP_CONF_FILE = ""
 LOG_CONF_FILE = ""
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
-        print("In test environment")
-        APP_CONF_FILE = "/config/app_conf.yml"
-        LOG_CONF_FILE = "/config/log_conf.yml"
+    print("In test environment")
+    APP_CONF_FILE = "/config/app_conf.yml"
+    LOG_CONF_FILE = "/config/log_conf.yml"
 else:
-        print("In Dev Environment")
-        APP_CONF_FILE = "app_conf.yml"
-        LOG_CONF_FILE = "log_conf.yml"
+    print("In Dev Environment")
+    APP_CONF_FILE = "app_conf.yml"
+    LOG_CONF_FILE = "log_conf.yml"
 
-with open(APP_CONF_FILE, "r", encoding='utf-8') as f:
-        APP_CONFIG = yaml.safe_load(f.read())
+with open(APP_CONF_FILE, "r", encoding='utf-8') as file:
+    APP_CONFIG = yaml.safe_load(file.read())
 
-with open(LOG_CONF_FILE, "r", encoding='utf-8') as f:
-        LOG_CONFIG = yaml.safe_load(f.read())
-        logging.config.dictConfig(LOG_CONFIG)
+with open(LOG_CONF_FILE, "r", encoding='utf-8') as file:
+    LOG_CONFIG = yaml.safe_load(file.read())
+    logging.config.dictConfig(LOG_CONFIG)
 
 logger = logging.getLogger('basicLogger')
 
@@ -46,15 +44,17 @@ if not os.path.isfile(APP_CONFIG['datastore']['filename']):
         "num_drop_out_students": 0,
         "max_drop_out_student_gpa": 0,
         "avg_drop_out_student_gpa": 0,
-        "last_updated": datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+        "last_updated": datetime.strftime(datetime.now() - timedelta(seconds=5),
+                                          '%Y-%m-%dT:%H:%M:%S')
     }
-    with open(APP_CONFIG['datastore']['filename'], "w", encoding='utf-8') as f:
-        json.dump(base_stats, f, indent=4)
+    with open(APP_CONFIG['datastore']['filename'], "w", encoding='utf-8') as file:
+        json.dump(base_stats, file, indent=4)
 
 def get_json_data():
+    """Retrieve data from the json datastore"""
     if os.path.isfile(APP_CONFIG['datastore']['filename']):
-        with open(APP_CONFIG['datastore']['filename'], 'r', encoding='utf-8') as f:
-            return json.load(f)
+        with open(APP_CONFIG['datastore']['filename'], 'r', encoding='utf-8') as file:
+            return json.load(file)
     else:
         return {
             "num_enrolled_students": 0,
@@ -63,7 +63,8 @@ def get_json_data():
                "num_drop_out_students": 0,
               "max_drop_out_student_gpa": 0.0,
               "avg_drop_out_student_gpa": 0,
-            "last_updated": datetime.strftime(datetime.now() - timedelta(seconds=5), '%Y-%m-%dT:%H:%M:%S')
+            "last_updated": datetime.strftime(datetime.now() - timedelta(seconds=5),
+                                              '%Y-%m-%dT:%H:%M:%S')
         }
 
 
@@ -88,9 +89,9 @@ def populate_stats():
     enroll_response = ""
     drop_out_response = {}
     try:
-        enroll_response = requests.get(f"{APP_CONFIG['eventstore']['url']}/enroll", 
+        enroll_response = requests.get(f"{APP_CONFIG['eventstore']['url']}/enroll",
                                        params=params, headers=header)
-        drop_out_response = requests.get(f"{APP_CONFIG['eventstore']['url']}/drop-out", 
+        drop_out_response = requests.get(f"{APP_CONFIG['eventstore']['url']}/drop-out",
                                          params=params, headers=header)
         logger.debug("ENROLL RESPONSE\n---------------\n")
         logger.debug(enroll_response.json())
@@ -120,19 +121,19 @@ def populate_stats():
 
         logger.debug(json_data)
 
-        with open(APP_CONFIG['datastore']['filename'], 'w', encoding='utf-8') as f:
-            json.dump(json_data, f, indent=4)
+        with open(APP_CONFIG['datastore']['filename'], 'w', encoding='utf-8') as file:
+            json.dump(json_data, file, indent=4)
     except Exception as e:
         logger.exception(e)
 
 def get_stats():
     """
     Receives a GET request for the data stored in the json datastore.
-    
+
     returns:
         object: the events in the json data store
         int: a 200 status code saying the events were retrieved
-        
+
     """
     logger.info("Request for statistics has been received")
 
@@ -146,7 +147,7 @@ def get_stats():
         return NoContent, 404
 
 
-    logger.debug(f"Statistics: {statistics}")
+    logger.debug("Statistics: %s", statistics)
     logger.info("Request has been completed")
 
     return statistics, 200
@@ -161,7 +162,10 @@ def init_scheduler():
 
 
 app = connexion.FlaskApp(__name__, specification_dir='')
-app.add_api("openapi.yaml", base_path="/processing", strict_validation=True, validate_responses=True)
+app.add_api("openapi.yaml", 
+            base_path="/processing", 
+            strict_validation=True, 
+            validate_responses=True)
 
 # Connexion wraps around Flask, and app.app allows you to access the underlying Flask application
 if not "TARGET_ENV" in os.environ or os.environ['TARGET_ENV'] != "test":
