@@ -32,10 +32,10 @@ else:
         APP_CONF_FILE = "app_conf.yml"
         LOG_CONF_FILE = "log_conf.yml"
 
-with open(APP_CONF_FILE, "r") as f:
+with open(APP_CONF_FILE, "r", encoding='utf-8') as f:
         APP_CONFIG = yaml.safe_load(f.read())
 
-with open(LOG_CONF_FILE, "r") as f:
+with open(LOG_CONF_FILE, "r", encoding='utf-8') as f:
         LOG_CONFIG = yaml.safe_load(f.read())
         logging.config.dictConfig(LOG_CONFIG)
 
@@ -66,6 +66,17 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 logger.info("Connecting to DB. Hostname:%s, Port:%s", host, port)
 
 def enroll_student(payload):
+    """
+    Stores enroll events in the enroll table
+
+    args:
+        object payload: the payload from the Kafka message containing the event
+    
+    returns:
+        object: A NoContent connexion object
+        int: a 201 status code saying the events were stored successfully
+        
+    """
     session = DB_SESSION()
 
     try:
@@ -89,6 +100,17 @@ def enroll_student(payload):
 
 
 def withdraw_student(payload):
+    """
+    Stores drop_out events in the drop_out table
+
+    args:
+        object payload: the payload from the Kafka message containing the event
+    
+    returns:
+        object: A NoContent connexion object
+        int: a 201 status code saying the events were stored successfully
+        
+    """
     session = DB_SESSION()
 
     try:
@@ -111,6 +133,19 @@ def withdraw_student(payload):
 
 
 def get_enroll_student(start_timestamp, end_timestamp):
+    """
+    Receives a GET request with a start time and end time
+    and retrieves enroll events created within that timeframe
+
+    args:
+        string start_timestamp: the start of the timeframe
+        string end_timestamp: the end of the timeframe
+    
+    returns:
+        list: A list of events created within the timeframe
+        int: a 200 status code saying the events were retrieved
+        
+    """
     logger.info("received request")
     session = DB_SESSION()
 
@@ -144,6 +179,19 @@ def get_enroll_student(start_timestamp, end_timestamp):
 
 
 def get_drop_out_student(start_timestamp, end_timestamp):
+    """
+    Receives a GET request with a start time and end time
+    and retrieves drop_out events created within that timeframe
+
+    args:
+        string start_timestamp: the start of the timeframe
+        string end_timestamp: the end of the timeframe
+    
+    returns:
+        list: A list of events created within the timeframe
+        int: a 200 status code saying the events were retrieved
+        
+    """
     session = DB_SESSION()
 
     start_timestamp_datetime = datetime.strptime(start_timestamp, "%Y-%m-%dT:%H:%M:%S")
@@ -166,6 +214,14 @@ def get_drop_out_student(start_timestamp, end_timestamp):
 
 
 def process_messages():
+    """
+    Consumes messages from the Kafka broker and stores the events
+    in the enroll and drop_out tables in the database. 
+    
+    returns:
+        None
+        
+    """
     hostname = "%s:%d" % (APP_CONFIG['events']['hostname'],
                         APP_CONFIG['events']['port'])
 

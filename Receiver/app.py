@@ -1,8 +1,6 @@
-from pathlib import Path
-import requests
-import yaml
 import logging
 import logging.config
+import yaml
 import uuid
 import json
 import datetime
@@ -25,10 +23,10 @@ else:
     APP_CONF_FILE = "app_conf.yml"
     LOG_CONF_FILE = "log_conf.yml"
 
-with open(APP_CONF_FILE, "r") as f:
+with open(APP_CONF_FILE, "r", encoding='utf-8') as f:
     APP_CONFIG = yaml.safe_load(f.read())
 
-with open(LOG_CONF_FILE, "r") as f:
+with open(LOG_CONF_FILE, "r", encoding='utf-8') as f:
     LOG_CONFIG = yaml.safe_load(f.read())
     logging.config.dictConfig(LOG_CONFIG)
 
@@ -43,7 +41,9 @@ current_retry = 0
 while current_retry <= max_retries:
     try:
         logger.info("Retry %d of connecting to kafka broker", current_retry)
-        client = KafkaClient(hosts=f"{APP_CONFIG['events']['hostname']}:{APP_CONFIG['events']['port']}")
+        host = APP_CONFIG['events']['hostname']
+        port = APP_CONFIG['events']['port']
+        client = KafkaClient(hosts=f"{host}:{port}")
         topic = client.topics[str.encode(APP_CONFIG['events']['topic'])]
         producer = topic.get_sync_producer()
         logger.info("Successfully connected to Kafka broker")
@@ -53,18 +53,23 @@ while current_retry <= max_retries:
         time.sleep(APP_CONFIG['events']['retry_delay'])
         current_retry += 1
 
-
 def enroll_student(body):
+    """
+    Receives a request with an enroll event type and produces a
+    Kafka message of the event.
+
+    args:
+        object body: the request body
+    
+    returns:
+        object: a NoContent connexion object
+        int: a 201 status code saying the event was created
+        
+    """
     body["trace_id"] = str(uuid.uuid4())
 
     logger.info("Received event enroll request with a trace id of %s", body['trace_id'])
 
-    # header = {"Content-Type": "application/json"}
-
-    # response = requests.post(app_config["enroll"]["url"], json=body, headers=header)
-    # client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    # topic = client.topics[str.encode(app_config['events']['topic'])]
-    # producer = topic.get_sync_producer()
     msg = {
         "type": "enroll",
         "datetime": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
@@ -76,12 +81,21 @@ def enroll_student(body):
     global producer
     producer.produce(msg_str.encode('utf-8'))
 
-    # logger.info(f"Returned event enroll response (id: {body["trace_id"]}) with status {response.status_code}")
-
     return NoContent, 201
 
-
 def withdraw_student(body):
+    """
+    Receives a request with a drop_out event type and produces a
+    Kafka message of the event.
+
+    args:
+        object body: the request body
+    
+    returns:
+        object: a NoContent connexion object
+        int: a 201 status code saying the event was created
+
+    """
     body["trace_id"] = str(uuid.uuid4())
 
     logger.info("Received event drop-out request with a trace id of %s", body['trace_id'])

@@ -24,10 +24,10 @@ else:
         APP_CONF_FILE = "app_conf.yml"
         LOG_CONF_FILE = "log_conf.yml"
 
-with open(APP_CONF_FILE, "r") as f:
+with open(APP_CONF_FILE, "r", encoding='utf-8') as f:
         APP_CONFIG = yaml.safe_load(f.read())
 
-with open(LOG_CONF_FILE, "r") as f:
+with open(LOG_CONF_FILE, "r", encoding='utf-8') as f:
         LOG_CONFIG = yaml.safe_load(f.read())
         logging.config.dictConfig(LOG_CONFIG)
 
