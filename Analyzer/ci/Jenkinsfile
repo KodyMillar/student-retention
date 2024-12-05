@@ -1,2 +1,2 @@
 @Library('usr-ci-functions@main') _
-usrBuild()
+usrBuild('analyzer', 'Analyzer')
