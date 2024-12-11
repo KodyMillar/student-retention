@@ -4,9 +4,9 @@ receiver:
 storage:
   url: http://ec2-34-201-131-246.compute-1.amazonaws.com/storage/stats
 processor:
-  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/processing
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/processing/stats
 analyzer:
-  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/analyzer
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/analyzer/stats
 timeout:
   seconds: 2
 scheduler:

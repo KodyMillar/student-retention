@@ -1,0 +1,152 @@
+2024-12-11 11:55:31,944 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:55:32,345 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:55:32,717 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:55:33,120 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:55:47,036 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:55:47,363 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:55:47,782 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:55:48,172 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:56:02,016 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:56:02,318 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:56:02,713 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:56:03,048 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:56:17,031 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:56:17,357 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:56:17,757 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:56:18,083 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:56:32,002 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:56:32,247 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:56:32,593 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:56:32,950 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:56:47,069 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:56:47,395 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:56:47,808 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:56:48,199 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:57:02,028 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:57:02,361 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:57:02,760 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:57:03,181 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:57:17,021 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:57:17,335 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:57:17,719 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:57:18,097 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:57:32,050 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:57:32,515 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:57:32,876 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:57:33,230 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:57:46,945 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:57:47,263 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:57:47,658 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:57:48,065 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:58:02,037 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:58:02,357 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:58:02,758 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:58:03,143 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:58:17,036 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:58:17,351 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:58:17,751 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:58:18,084 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:58:32,004 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:58:32,289 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:58:32,612 - basicLogger - INFO - Processor returning non-200 response
+2024-12-11 11:58:32,934 - basicLogger - INFO - Analyzer returning non-200 response
+2024-12-11 11:58:56,019 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:58:56,336 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:58:56,652 - basicLogger - INFO - Processor is healthy
+2024-12-11 11:58:58,035 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 11:59:10,999 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:59:11,245 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:59:11,559 - basicLogger - INFO - Processor is healthy
+2024-12-11 11:59:13,088 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 11:59:26,113 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:59:26,442 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:59:26,767 - basicLogger - INFO - Processor is healthy
+2024-12-11 11:59:28,142 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 11:59:41,032 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:59:41,351 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:59:41,677 - basicLogger - INFO - Processor is healthy
+2024-12-11 11:59:43,094 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 11:59:56,025 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 11:59:56,354 - basicLogger - INFO - Storage is Healthy
+2024-12-11 11:59:56,675 - basicLogger - INFO - Processor is healthy
+2024-12-11 11:59:58,044 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:00:11,009 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:00:11,355 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:00:11,671 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:00:13,099 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:00:26,064 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:00:26,378 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:00:26,699 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:00:28,006 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:00:41,016 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:00:41,345 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:00:41,649 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:00:42,975 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:00:56,026 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:00:56,359 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:00:56,678 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:00:58,031 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:01:11,016 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:01:11,327 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:01:11,646 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:01:13,007 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:01:26,023 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:01:26,351 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:01:26,659 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:01:28,060 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:01:41,025 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:01:41,317 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:01:41,625 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:01:43,012 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:01:56,039 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:01:56,285 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:01:56,616 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:01:57,965 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:02:11,049 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:02:11,363 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:02:11,683 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:02:13,015 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:02:26,039 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:02:26,358 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:02:26,606 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:02:27,936 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:02:41,158 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:02:41,510 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:02:41,847 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:02:43,161 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:02:56,129 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:02:56,451 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:02:56,791 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:02:58,178 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:03:11,034 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:03:11,852 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:03:12,340 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:03:13,847 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:03:26,001 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:03:26,243 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:03:26,481 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:03:27,725 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:03:41,033 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:03:41,359 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:03:41,662 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:03:43,005 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:03:56,020 - basicLogger - INFO - Receiver is Healthly
+2024-12-11 12:03:56,324 - basicLogger - INFO - Storage is Healthy
+2024-12-11 12:03:56,637 - basicLogger - INFO - Processor is healthy
+2024-12-11 12:03:58,000 - basicLogger - INFO - Analyzer is healthy
+2024-12-11 12:04:10,876 - basicLogger - INFO - Receiver is Not Available
+2024-12-11 12:04:11,116 - basicLogger - INFO - Storage is Not Available
+2024-12-11 12:04:11,332 - basicLogger - INFO - Processor is Not Available
+2024-12-11 12:04:11,496 - basicLogger - INFO - Analyzer is Not Available
+2024-12-11 12:04:26,042 - basicLogger - INFO - Receiver is Not Available
+2024-12-11 12:04:26,233 - basicLogger - INFO - Storage is Not Available
+2024-12-11 12:04:26,390 - basicLogger - INFO - Processor is Not Available
+2024-12-11 12:04:26,608 - basicLogger - INFO - Analyzer is Not Available
+2024-12-11 12:04:40,998 - basicLogger - INFO - Receiver is Not Available
+2024-12-11 12:04:41,236 - basicLogger - INFO - Storage is Not Available
+2024-12-11 12:04:41,480 - basicLogger - INFO - Processor is Not Available
+2024-12-11 12:04:41,739 - basicLogger - INFO - Analyzer is Not Available
+2024-12-11 12:04:55,923 - basicLogger - INFO - Receiver is Not Available
+2024-12-11 12:04:56,146 - basicLogger - INFO - Storage is Not Available
+2024-12-11 12:04:56,364 - basicLogger - INFO - Processor is Not Available
+2024-12-11 12:04:56,589 - basicLogger - INFO - Analyzer is Not Available
