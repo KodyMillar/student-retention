@@ -7,10 +7,10 @@ import connexion
 import requests
 from requests.exceptions import Timeout, ConnectionError
 
-with open('app_conf.yml', 'r', encoding='utf-8') as file:
+with open('/config/app_conf.yml', 'r', encoding='utf-8') as file:
     app_config = yaml.safe_load(file.read())
 
-with open('log_conf.yml', "r", encoding='utf-8') as f:
+with open('/logs/log_conf.yml', "r", encoding='utf-8') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
 
@@ -82,13 +82,13 @@ def check_services():
         "analyzer": analyzer_status
     }
 
-    with open('status.json', 'w', encoding='utf-8') as file:
+    with open('/data/status.json', 'w', encoding='utf-8') as file:
         json.dump(status_json, file, indent=4)
 
 def get_checks():
     """Get checks in status storage file"""
     try:
-        with open('status.json', 'r', encoding='utf-8') as file:
+        with open('/data/status.json', 'r', encoding='utf-8') as file:
             status_json = json.load(file)
         return status_json, 200
     except FileNotFoundError:
