@@ -7,7 +7,7 @@ function Anomalies({ anomalyType }) {
     const [error, setError] = useState(null);
 
     const getAnomaly = () => {
-        fetch(`http://ec2-52-90-75-251.compute-1.amazonaws.com/anomalies/anomalies?anomaly_type=${anomalyType}`, {
+        fetch(`http://ec2-18-206-137-36.compute-1.amazonaws.com/anomalies/anomalies?anomaly_type=${anomalyType}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
