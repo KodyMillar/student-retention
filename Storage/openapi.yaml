@@ -80,6 +80,18 @@ paths:
                 properties:
                   message:
                     type: string
+  /stats:
+    get:
+      summary: gets the event stats
+      operationId: app.get_event_stats
+      description: Get the stats of the history events
+      responses:
+        '200':
+          description: Successfully returned student event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Stats'
 
 components:
   schemas:
@@ -139,3 +151,14 @@ components:
           type: string
           format: uuid
           example: '8ce371ef-3b9c-4f8f-83e3-62e79354cc51'
+    Stats:
+      required:
+      - num_enrolls
+      - num_drop_outs
+      properties:
+        num_enrolls:
+          type: integer
+          example: 100
+        num_drop_outs:
+          type: integer
+          example: 100

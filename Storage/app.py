@@ -212,6 +212,17 @@ def get_drop_out_student(start_timestamp, end_timestamp):
 
     return results_list, 200
 
+def get_event_stats():
+    session = DB_SESSION()
+
+    enroll_count = session.query(Enroll).count()
+    drop_out_count = session.query(DropOut).count()
+
+    session.close()
+
+    return { "num_enrolls": enroll_count, "num_drop_outs": drop_out_count }, 200
+
+
 
 def process_messages():
     """

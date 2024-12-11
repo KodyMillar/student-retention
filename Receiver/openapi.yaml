@@ -50,6 +50,14 @@ paths:
           description: invalid student object
         "403":
           description: you do not have permission to withdraw a student
+  /check:
+    get:
+      summary: Checks the health of the Receiver
+      operationId: app.get_check
+      description: Service is healthy if this service returns a response
+      responses:
+        '200':
+          description: OK
 components:
   schemas:
     StudentEnrollment:
