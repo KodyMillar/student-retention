@@ -1,0 +1,13 @@
+version: 2
+receiver:
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/receiver/check
+storage:
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/storage/stats
+processor:
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/processing
+analyzer:
+  url: http://ec2-34-201-131-246.compute-1.amazonaws.com/analyzer
+timeout:
+  seconds: 2
+scheduler:
+  seconds: 15
