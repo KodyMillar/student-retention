@@ -6,7 +6,7 @@ info:
   contact:
     email: user@test.com
 paths:
-  /check:
+  /stats:
     get:
       operationId: app.get_checks
       responses:
